@@ -20,14 +20,25 @@ public class connect_four implements ActionListener{
 
         message.setBackground(new Color(25,25,25));
         message.setForeground(new Color(255,255,255));
+        message.setFont(new Font("Ink Free",Font.BOLD,75));
         message.setHorizontalAlignment(JLabel.CENTER);
         message.setText("Connect Four!");
         message.setOpaque(true);
 
-        panel.setLayout(new BorderLayout());
-        panel.setBounds(0,0,800,100);
+        title.setLayout(new BorderLayout());
+        title.setBounds(0,0,800,100);
 
-        panel.add(message);
+        panel.setLayout(new GridLayout(7,8));
+        panel.setBackground(new Color(150,150,150));
+
+        for(int i=0;i<6;i++){
+            for(int j=0;j<7;j++){
+                buttons[i][j] = new JButton();
+            }
+        }
+
+        title.add(message);
+        frame.add(title,BorderLayout.NORTH);
         frame.add(panel);
     }
     @Override
