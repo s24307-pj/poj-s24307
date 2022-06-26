@@ -3,88 +3,130 @@ import java.util.*;
 import javax.swing.*;
 import java.awt.event.*;
 
-public class connect_four implements ActionListener{
-
+public class connect_four implements ActionListener {
     Random random = new Random();
     JFrame frame = new JFrame();
     JPanel title = new JPanel();
     JPanel panel = new JPanel();
     JLabel message = new JLabel();
     JButton[][] buttons = new JButton[6][7];
-    private static final String red   = "img/red.png";
+
+    boolean winner;
+    private static final String red = "img/red.png";
     private static final String yellow = "img/yellow.png";
     boolean p1_turn;
-    connect_four(){
+
+    connect_four() {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(800,700);
+        frame.setSize(800, 700);
         frame.setLayout(new BorderLayout());
         frame.setVisible(true);
 
-        message.setBackground(new Color(25,25,25));
-        message.setForeground(new Color(255,255,255));
-        message.setFont(new Font("Ink Free",Font.BOLD,75));
+        message.setBackground(new Color(25, 25, 25));
+        message.setForeground(new Color(255, 255, 255));
+        message.setFont(new Font("Ink Free", Font.BOLD, 75));
         message.setHorizontalAlignment(JLabel.CENTER);
         message.setText("Connect Four!");
         message.setOpaque(true);
 
         title.setLayout(new BorderLayout());
-        title.setBounds(0,0,800,100);
+        title.setBounds(0, 0, 800, 100);
 
-        panel.setLayout(new GridLayout(7,8));
-        panel.setBackground(new Color(150,150,150));
+        panel.setLayout(new GridLayout(7, 8));
+        panel.setBackground(new Color(150, 150, 150));
 
-        for(int i=0;i<6;i++){
-            for(int j=0;j<7;j++){
-                buttons[i][j] = new JButton();
-                panel.add(buttons[i][j]);
-                buttons[i][j].setFont(new Font("Ink Free",Font.BOLD,120));
-                buttons[i][j].setFocusable(false);
-                buttons[i][j].addActionListener(this);
-            }
-        }
-
+        initBoard();
         title.add(message);
-        frame.add(title,BorderLayout.NORTH);
+        frame.add(title, BorderLayout.NORTH);
         frame.add(panel);
 
         turn();
+        String Icon = "";
+        winner = isWinner(buttons, Icon);
+        if(winner){
+            if(p1_turn){
+                message.setText("P1 won");
+            }else {
+                message.setText("P2 won");
+            }
+        }
     }
+
     @Override
     public void actionPerformed(ActionEvent e) {
-        for(int i=0;i<6;i++){
-            for(int j=0;j<7;j++) {
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 7; j++) {
                 if (e.getSource() == buttons[i][j]) {
-                    if(p1_turn){
-                        if(buttons[i][j].getText() == ""){
+                    if (p1_turn) {
+                        if (buttons[i][j].getText() == "") {
                             buttons[i][j].setIcon(new ImageIcon(red));
                             p1_turn = false;
                             message.setText("p2 turn");
                         }
-                    }else{
+                    } else {
                         buttons[i][j].setIcon(new ImageIcon(yellow));
                         p1_turn = true;
                         message.setText("p1 turn");
                     }
                 }
-                }
             }
+        }
     }
-    public void turn(){
-        if(random.nextInt(2) == 0){
+
+    public void initBoard() {
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 7; j++) {
+                buttons[i][j] = new JButton();
+                panel.add(buttons[i][j]);
+                buttons[i][j].setFont(new Font("Ink Free", Font.BOLD, 120));
+                buttons[i][j].setFocusable(false);
+                buttons[i][j].addActionListener(this);
+            }
+        }
+
+    }
+
+    public void turn() {
+        if (random.nextInt(2) == 0) {
             p1_turn = true;
             message.setText("P1 turn");
-        }else{
+        } else {
             p1_turn = true;
             message.setText("P2 turn");
         }
     }
-    public void winner(){
 
-    }
-    public void p1Wins(int p1,int p2, int x){
+    public boolean isWinner(JButton[][] buttons, String Icon) {
+        for (int i = 0; i < buttons.length; i++) {
+            for (int j = 0; j < buttons[0].length - 3; j++) {
+                if (buttons[i][j].getText() == Icon && buttons[i][j + 1].getText() == Icon && buttons[i][j + 2].getText() == Icon && buttons[i][j + 3].getText() == Icon) {
+                    return true;
+                }
+            }
+        }
+        for (int i = 3; i < buttons.length; i++) {
+            for (int j = 0; j < buttons[0].length - 3; j++) {
+                if (buttons[i][j].getText() == Icon && buttons[i + 1][j].getText() == Icon && buttons[i + 2][j].getText() == Icon && buttons[i + 3][j].getText() == Icon) {
+                    return true;
+                }
+            }
+        }
+        for (int i = 0; i < buttons.length - 3; i++) {
+            for (int j = 0; j < buttons[0].length; j++) {
+                if (buttons[i][j].getText() == Icon && buttons[i - 1][j + 1].getText() == Icon && buttons[i - 2][j + 2].getText() == Icon && buttons[i - 3][j + 3].getText() == Icon) {
+                    return true;
+                }
+            }
 
-    }
-    public void p2Wins(int p1,int p2, int x){
+        }
+        for (int i = 0; i < buttons.length - 3; i++) {
+            for (int j = 0; j < buttons[0].length - 3; j++) {
+                if (buttons[i][j].getText() == Icon && buttons[i + 1][j + 1].getText() == Icon && buttons[i + 2][j + 2].getText() == Icon && buttons[i + 3][j + 3].getText() == Icon) {
+                    return true;
+                }
+            }
 
+        }
+        return false;
     }
 }
