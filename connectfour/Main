@@ -1,0 +1,5 @@
+public class Main extends connect_four {
+    public static void main(String[] args){
+        connect_four connect = new connect_four();
+    }
+}
