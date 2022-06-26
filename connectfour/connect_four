@@ -11,7 +11,10 @@ public class connect_four implements ActionListener{
     JPanel panel = new JPanel();
     JLabel message = new JLabel();
     JButton[][] buttons = new JButton[6][7];
-    boolean p1_turn = true;
+    private static final String empty = "img/empty.png";
+    private static final String red   = "img/red.png";
+    private static final String yellow = "img/yellow.png";
+    boolean p1_turn;
     connect_four(){
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(800,700);
@@ -44,13 +47,37 @@ public class connect_four implements ActionListener{
         title.add(message);
         frame.add(title,BorderLayout.NORTH);
         frame.add(panel);
+
+        turn();
     }
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        for(int i=0;i<6;i++){
+            for(int j=0;j<7;j++) {
+                if (e.getSource() == buttons[i][j]) {
+                    if(p1_turn){
+                        if(buttons[i][j].getText() == ""){
+                            buttons[i][j].setIcon(new ImageIcon(red));
+                            p1_turn = false;
+                            message.setText("p2 turn");
+                        }
+                    }else{
+                        buttons[i][j].setIcon(new ImageIcon(yellow));
+                        p1_turn = true;
+                        message.setText("p1 turn");
+                    }
+                }
+                }
+            }
     }
     public void turn(){
-
+        if(random.nextInt(2) == 0){
+            p1_turn = true;
+            message.setText("P1 turn");
+        }else{
+            p1_turn = true;
+            message.setText("P2 turn");
+        }
     }
     public void winner(){
 
