@@ -1,0 +1,49 @@
+import java.awt.*;
+import java.util.*;
+import javax.swing.*;
+import java.awt.event.*;
+
+public class connect_four implements ActionListener{
+
+    Random random = new Random();
+    JFrame frame = new JFrame();
+    JPanel title = new JPanel();
+    JPanel panel = new JPanel();
+    JLabel message = new JLabel();
+    JButton[][] buttons = new JButton[6][7];
+    boolean p1_turn = true;
+    connect_four(){
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(800,700);
+        frame.setLayout(new BorderLayout());
+        frame.setVisible(true);
+
+        message.setBackground(new Color(25,25,25));
+        message.setForeground(new Color(255,255,255));
+        message.setHorizontalAlignment(JLabel.CENTER);
+        message.setText("Connect Four!");
+        message.setOpaque(true);
+
+        panel.setLayout(new BorderLayout());
+        panel.setBounds(0,0,800,100);
+
+        panel.add(message);
+        frame.add(panel);
+    }
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+    }
+    public void turn(){
+
+    }
+    public void winner(){
+
+    }
+    public void p1Wins(int p1,int p2, int x){
+
+    }
+    public void p2Wins(int p1,int p2, int x){
+
+    }
+}
