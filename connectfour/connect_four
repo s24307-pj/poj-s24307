@@ -13,7 +13,6 @@ public class connect_four implements ActionListener {
     private static final String red = "img/red.png";
     private static final String yellow = "img/yellow.png";
     boolean p1_turn;
-    private int turn=0;
 
     connect_four() {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -40,23 +39,15 @@ public class connect_four implements ActionListener {
         frame.add(panel);
 
         turn();
-        if(turn == 42){
-            message.setText("DRAW");
-        }
 
-        if(isWinnerRed(buttons)) {
-            message.setText("P1 won");
-            gameOver();
-        }
-        else if(isWinnerYellow(buttons)){
-            message.setText("P2 won");
-            gameOver();
-        }else{
-            message.setText("DRAW");
-            gameOver();
+        if(isWinnerRed(buttons)){
+            gameOver("P1 WON");
+        }else if(isWinnerYellow(buttons)){
+            gameOver("P2 WON");
         }
 
     }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         for (int i = 0; i < 6; i++) {
@@ -66,21 +57,21 @@ public class connect_four implements ActionListener {
                         if (buttons[i][j].getText() == "") {
                             buttons[i][j].setIcon(new ImageIcon(red));
                             p1_turn = false;
-                            message.setText("p2 turn");
                         }
-                    } else {
+                    } else{
                         buttons[i][j].setIcon(new ImageIcon(yellow));
                         p1_turn = true;
                         message.setText("p1 turn");
                     }
                 }
+
             }
         }
     }
 
     public void initBoard() {
-        for (int i = 0; i <  6; i++) {
-            for (int j = 0; j <  7; j++) {
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 7; j++) {
                 buttons[i][j] = new JButton();
                 panel.add(buttons[i][j]);
                 buttons[i][j].setFont(new Font("Ink Free", Font.BOLD, 120));
@@ -95,31 +86,30 @@ public class connect_four implements ActionListener {
         if (random.nextInt(2) == 0) {
             p1_turn = true;
             message.setText("P1 turn");
-            turn++;
         } else {
             p1_turn = true;
             message.setText("P2 turn");
-            turn++;
         }
     }
+
     public boolean isWinnerRed(JButton[][] buttons) {
         for (int i = 0; i < buttons.length; i++) {
             for (int j = 0; j < buttons[0].length - 3; j++) {
-                if (buttons[i][j].getIcon().toString().equals(red) && buttons[i][j].getIcon().toString().equals(red) && buttons[i][j].getIcon().toString().equals(red) && buttons[i][j].getIcon().toString().equals(red)) {
+                if (((""+buttons[i][j].getIcon()).equals(red) && (""+buttons[i][j+1].getIcon()).equals(red) && (""+buttons[i][j+2].getIcon()).equals(red) && (""+buttons[i][j+3].getIcon()).equals(red))) {
                     return true;
                 }
             }
         }
         for (int i = 3; i < buttons.length; i++) {
             for (int j = 0; j < buttons[0].length - 3; j++) {
-                if (buttons[i][j].getIcon().toString().equals(red) && buttons[i + 1][j].getIcon().toString().equals(red) && buttons[i + 2][j].getIcon().toString().equals(red) && buttons[i + 3][j].getIcon().toString().equals(red)) {
+                if (((""+buttons[i][j].getIcon()).equals(red) && (""+buttons[i+1][j].getIcon()).equals(red) && (""+buttons[i+2][j].getIcon()).equals(red) && (""+buttons[i+3][j].getIcon()).equals(red))) {
                     return true;
                 }
             }
         }
         for (int i = 0; i < buttons.length - 3; i++) {
             for (int j = 0; j < buttons[0].length; j++) {
-                if (buttons[i][j].getIcon().toString().equals(red) && buttons[i - 1][j + 1].getIcon().toString().equals(red) && buttons[i - 2][j + 2].getIcon().toString().equals(red) && buttons[i - 3][j + 3].getIcon().toString().equals(red)) {
+                if (((""+buttons[i][j].getIcon()).equals(red) && (""+buttons[i-1][j+1].getIcon()).equals(red) && (""+buttons[i-2][j+2].getIcon()).equals(red) && (""+buttons[i-3][j+3].getIcon()).equals(red))) {
                     return true;
                 }
             }
@@ -127,7 +117,7 @@ public class connect_four implements ActionListener {
         }
         for (int i = 0; i < buttons.length - 3; i++) {
             for (int j = 0; j < buttons[0].length - 3; j++) {
-                if (buttons[i][j].getIcon().toString().equals(red) && buttons[i + 1][j + 1].getIcon().toString().equals(red) && buttons[i + 2][j + 2].getIcon().toString().equals(red) && buttons[i + 3][j + 3].getIcon().toString().equals(red)) {
+                if (((""+buttons[i][j].getIcon()).equals(red) && (""+buttons[i+1][j+1].getIcon()).equals(red) && (""+buttons[i+2][j+2].getIcon()).equals(red) && (""+buttons[i+3][j+3].getIcon()).equals(red))) {
                     return true;
                 }
             }
@@ -139,21 +129,21 @@ public class connect_four implements ActionListener {
     public boolean isWinnerYellow(JButton[][] buttons) {
         for (int i = 0; i < buttons.length; i++) {
             for (int j = 0; j < buttons[0].length - 3; j++) {
-                if (buttons[i][j].getIcon().toString().equals(yellow) && buttons[i][j + 1].getIcon().toString().equals(yellow) && buttons[i][j + 2].getIcon().toString().equals(yellow)  && buttons[i][j + 3].getIcon().toString().equals(yellow)) {
+                if (((""+buttons[i][j].getIcon()).equals(yellow) && (""+buttons[i][j+1].getIcon()).equals(yellow) && (""+buttons[i][j+2].getIcon()).equals(yellow) && (""+buttons[i][j+3].getIcon()).equals(yellow))) {
                     return true;
                 }
             }
         }
         for (int i = 3; i < buttons.length; i++) {
             for (int j = 0; j < buttons[0].length - 3; j++) {
-                if (buttons[i][j].getIcon().toString().equals(yellow) && buttons[i + 1][j].getIcon().toString().equals(yellow) && buttons[i + 2][j].getIcon().toString().equals(yellow) && buttons[i + 3][j].getIcon().toString().equals(yellow)) {
+                if (((""+buttons[i][j].getIcon()).equals(yellow) && (""+buttons[i+1][j].getIcon()).equals(yellow) && (""+buttons[i+2][j].getIcon()).equals(yellow) && (""+buttons[i+3][j].getIcon()).equals(yellow))) {
                     return true;
                 }
             }
         }
         for (int i = 0; i < buttons.length - 3; i++) {
             for (int j = 0; j < buttons[0].length; j++) {
-                if (buttons[i][j].getIcon().toString().equals(yellow) && buttons[i - 1][j + 1].getIcon().toString().equals(yellow) && buttons[i - 2][j + 2].getIcon().toString().equals(yellow) && buttons[i - 3][j + 3].getIcon().toString().equals(yellow)) {
+                if (((""+buttons[i][j].getIcon()).equals(yellow) && (""+buttons[i-1][j+1].getIcon()).equals(yellow) && (""+buttons[i-2][j+2].getIcon()).equals(yellow) && (""+buttons[i-3][j+3].getIcon()).equals(yellow))) {
                     return true;
                 }
             }
@@ -161,7 +151,7 @@ public class connect_four implements ActionListener {
         }
         for (int i = 0; i < buttons.length - 3; i++) {
             for (int j = 0; j < buttons[0].length - 3; j++) {
-                if (buttons[i][j].getIcon().toString().equals(yellow) && buttons[i + 1][j + 1].getIcon().toString().equals(yellow) && buttons[i + 2][j + 2].getIcon().toString().equals(yellow) && buttons[i + 3][j + 3].getIcon().toString().equals(yellow)) {
+                if (((""+buttons[i][j].getIcon()).equals(yellow) && (""+buttons[i+1][j+1].getIcon()).equals(yellow) && (""+buttons[i+2][j+2].getIcon()).equals(yellow) && (""+buttons[i+3][j+3].getIcon()).equals(yellow))) {
                     return true;
                 }
             }
@@ -169,7 +159,7 @@ public class connect_four implements ActionListener {
         }
         return false;
     }
-    public void gameOver()
+    public void gameOver(String message)
     {
         int playAgain = JOptionPane.showConfirmDialog(frame, message, "Play Again?", JOptionPane.YES_NO_OPTION);
         if (playAgain == JOptionPane.YES_OPTION) {
